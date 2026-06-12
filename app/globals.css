@@ -2909,11 +2909,73 @@ h1 {
   line-height: 1.5;
 }
 
-.aleix-ask {
+.aleix-loom-card {
+  display: grid;
+  grid-template-columns: minmax(220px, 360px) minmax(0, 1fr);
+  gap: 14px;
+  align-items: center;
   max-width: 760px;
-  margin: 0;
-  font-size: 18px;
-  line-height: 1.42;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: white;
+  color: var(--text);
+  padding: 10px;
+  text-decoration: none;
+}
+
+.aleix-loom-card:hover {
+  border-color: var(--orange);
+}
+
+.aleix-loom-media {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  aspect-ratio: 16 / 10;
+  background: #eeeee9;
+}
+
+.aleix-loom-media img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.aleix-loom-play {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.72);
+}
+
+.aleix-loom-play::before {
+  content: "";
+  position: absolute;
+  top: 12px;
+  left: 16px;
+  border-top: 9px solid transparent;
+  border-bottom: 9px solid transparent;
+  border-left: 13px solid white;
+}
+
+.aleix-loom-copy {
+  display: grid;
+  gap: 5px;
+}
+
+.aleix-loom-copy strong {
+  font-size: 16px;
+  letter-spacing: 0;
+}
+
+.aleix-loom-copy span {
+  color: var(--secondary);
+  font-size: 14px;
+  line-height: 1.4;
 }
 
 .aleix-note-list {
@@ -3050,6 +3112,10 @@ h1 {
 
   .aleix-heading p {
     font-size: 18px;
+  }
+
+  .aleix-loom-card {
+    grid-template-columns: 1fr;
   }
 }
 

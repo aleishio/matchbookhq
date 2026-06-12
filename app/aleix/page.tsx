@@ -11,8 +11,14 @@ const links = [
   { label: "LinkedIn", href: "https://www.linkedin.com/in/aleix-ordeig/" },
   { label: "X", href: "https://x.com/heyalerio" },
   { label: "GitHub", href: "https://github.com/aleishio/matchbookhq" },
+  { label: "Loom", href: "https://www.loom.com/share/fcccc33cd9df4efb93a204a13acf0ed7" },
   { label: "Resume", href: "#resume" }
 ];
+const loomVideo = {
+  href: "https://www.loom.com/share/fcccc33cd9df4efb93a204a13acf0ed7",
+  imageSrc: "/aleix/aleix-yc-team-loom.jpg",
+  title: "Aleix - YC Team"
+};
 const resumeItems = [
   {
     role: "Creai",
@@ -118,7 +124,7 @@ export default function AleixPage() {
                   href={link.href}
                   key={link.label}
                   label={link.label}
-                  linkType={link.label === "Resume" ? "resume" : "social"}
+                  linkType={link.label === "Resume" ? "resume" : link.label === "Loom" ? "video" : "social"}
                 >
                   {link.label}
                 </AleixTrackedLink>
@@ -131,12 +137,25 @@ export default function AleixPage() {
         <section className="aleix-grid">
           <article className="aleix-main">
             <section className="section">
-              <div className="label">Short version</div>
-              <p className="aleix-ask">
-                Spanish-Mexican. Dropped out to build. Startup experience,
-                Latitud, Creai, founder communities, and a lot of hands-on work
-                helping founders with their technology.
-              </p>
+              <div className="label">Loom</div>
+              <AleixTrackedLink
+                className="aleix-loom-card"
+                href={loomVideo.href}
+                label="Aleix YC Team Loom"
+                linkType="video"
+              >
+                <span className="aleix-loom-media">
+                  <img
+                    alt="Loom preview of Aleix explaining why he wants to join the YC team."
+                    src={loomVideo.imageSrc}
+                  />
+                  <span className="aleix-loom-play" aria-hidden="true" />
+                </span>
+                <span className="aleix-loom-copy">
+                  <strong>{loomVideo.title}</strong>
+                  <span>Short Loom about why I want to work with YC founders.</span>
+                </span>
+              </AleixTrackedLink>
             </section>
 
             <section className="section">

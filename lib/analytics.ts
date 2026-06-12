@@ -115,7 +115,7 @@ export type AnalyticsEventProperties = {
   };
   "aleix link clicked": {
     link_label: string;
-    link_type: "social" | "resume" | "project" | "reference" | "demo";
+    link_type: "social" | "resume" | "project" | "reference" | "demo" | "video";
   };
   "agent access opened": {
     default_lane: AgentAccessLane;

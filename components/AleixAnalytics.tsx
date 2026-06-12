@@ -3,7 +3,7 @@
 import { useEffect, type ReactNode } from "react";
 import { captureAnalyticsEvent } from "@/lib/analytics";
 
-type AleixLinkType = "social" | "resume" | "project" | "reference" | "demo";
+type AleixLinkType = "social" | "resume" | "project" | "reference" | "demo" | "video";
 
 export function AleixPageAnalytics({ sectionCount }: { sectionCount: number }) {
   useEffect(() => {
