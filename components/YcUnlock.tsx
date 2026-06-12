@@ -7,6 +7,7 @@ import { formatAgentHandoffText, type AgentHandoffSession } from "@/lib/agent-ha
 import { captureAnalyticsEvent } from "@/lib/analytics";
 
 type UnlockMode = "app" | "agent";
+type InstructionAudience = "human" | "machine";
 
 type AgentSessionResponse = AgentHandoffSession & {
   authorizationHeader: string;
@@ -19,31 +20,48 @@ type UnlockState =
   | { status: "error"; message: string }
   | { status: "agent-ready"; session: AgentSessionResponse };
 
-export function YcUnlock({ nextPath }: { nextPath: string }) {
-  const [mode, setMode] = useState<UnlockMode>("app");
+type YcUnlockProps = {
+  defaultMode?: UnlockMode;
+  nextPath: string;
+  showAgentInstructions?: boolean;
+};
+
+export function YcUnlock({
+  defaultMode = "app",
+  nextPath,
+  showAgentInstructions = false
+}: YcUnlockProps) {
+  const [mode, setMode] = useState<UnlockMode>(defaultMode);
+  const [instructionAudience, setInstructionAudience] = useState<InstructionAudience>("machine");
   const [password, setPassword] = useState("");
   const [state, setState] = useState<UnlockState>({ status: "idle" });
-  const [copyState, setCopyState] = useState<"idle" | "copied" | "manual">("idle");
+  const [copyState, setCopyState] = useState<"idle" | "copied" | "machine-copied" | "manual">("idle");
+  const hasAutoUnlockedRef = useRef(false);
   const hasCapturedAgentOpenRef = useRef(false);
   const manualCopyRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
-    const hash = window.location.hash;
-    if (!hash) return;
+    const hashToken = getHashToken(window.location.hash);
+    if (!hashToken) return;
 
-    setPassword(decodePasscodeHash(hash.slice(1)));
-    window.history.replaceState(
-      window.history.state,
-      "",
-      `${window.location.pathname}${window.location.search}`
-    );
-  }, []);
+    setPassword(hashToken);
+
+    if (!showAgentInstructions || hasAutoUnlockedRef.current) return;
+    hasAutoUnlockedRef.current = true;
+    setMode("agent");
+    void unlockWithCredentials({
+      nextMode: "agent",
+      nextPassword: hashToken
+    });
+  }, [showAgentInstructions]);
 
   const agentConfigText = useMemo(() => {
     if (state.status !== "agent-ready") return "";
 
     return formatAgentHandoffText(state.session);
   }, [state]);
+
+  const machineInstructions = useMemo(() => formatMachineInstructions(), []);
 
   useEffect(() => {
     if (copyState !== "manual") return;
@@ -56,6 +74,19 @@ export function YcUnlock({ nextPath }: { nextPath: string }) {
 
   async function submitUnlock(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    await unlockWithCredentials({
+      nextMode: mode,
+      nextPassword: password
+    });
+  }
+
+  async function unlockWithCredentials({
+    nextMode,
+    nextPassword
+  }: {
+    nextMode: UnlockMode;
+    nextPassword: string;
+  }) {
     setState({ status: "submitting" });
     setCopyState("idle");
 
@@ -64,9 +95,9 @@ export function YcUnlock({ nextPath }: { nextPath: string }) {
     try {
       response = await fetch("/api/unlock", {
         body: JSON.stringify({
-          mode,
+          mode: nextMode,
           next: nextPath,
-          password
+          password: nextPassword
         }),
         headers: {
           "Content-Type": "application/json"
@@ -90,7 +121,7 @@ export function YcUnlock({ nextPath }: { nextPath: string }) {
       return;
     }
 
-    if (mode === "agent") {
+    if (nextMode === "agent") {
       await createAgentSession();
       return;
     }
@@ -170,6 +201,15 @@ export function YcUnlock({ nextPath }: { nextPath: string }) {
     }
   }
 
+  async function copyMachineInstructions() {
+    try {
+      await navigator.clipboard.writeText(machineInstructions);
+      setCopyState("machine-copied");
+    } catch {
+      setCopyState("manual");
+    }
+  }
+
   function selectMode(nextMode: UnlockMode) {
     setMode(nextMode);
 
@@ -187,8 +227,8 @@ export function YcUnlock({ nextPath }: { nextPath: string }) {
   }
 
   return (
-    <main className="unlock-page">
-      <section className="unlock-panel" aria-labelledby="unlock-title">
+    <main className={`unlock-page${showAgentInstructions ? " agent-unlock-page" : ""}`}>
+      <section className={`unlock-panel${showAgentInstructions ? " agent-unlock-panel" : ""}`} aria-labelledby="unlock-title">
         <div className="unlock-brand-row">
           <div className="yc-mark large" aria-hidden="true">Y</div>
           <div>
@@ -206,8 +246,8 @@ export function YcUnlock({ nextPath }: { nextPath: string }) {
                 onClick={() => selectMode("app")}
                 type="button"
               >
-                <span>Open app</span>
-                <strong>Human review</strong>
+                <span>Human</span>
+                <strong>Open app</strong>
               </button>
               <button
                 aria-pressed={mode === "agent"}
@@ -215,7 +255,7 @@ export function YcUnlock({ nextPath }: { nextPath: string }) {
                 onClick={() => selectMode("agent")}
                 type="button"
               >
-                <span>Agent mode</span>
+                <span>Machine</span>
                 <strong>Agent handoff</strong>
               </button>
             </div>
@@ -245,11 +285,70 @@ export function YcUnlock({ nextPath }: { nextPath: string }) {
               {state.status === "submitting"
                 ? "Unlocking"
                 : mode === "agent"
-                  ? "Unlock agent mode"
+                  ? "Unlock machine handoff"
                   : "Unlock YC OS"}
             </button>
           </form>
         )}
+
+        {showAgentInstructions && state.status !== "agent-ready" ? (
+          <section className="unlock-agent-instructions" aria-label="Agent instructions">
+            <div className="agent-instruction-header">
+              <div>
+                <div className="label">Agent handoff</div>
+                <h2>Agent-native unlock instructions.</h2>
+              </div>
+              <div className="agent-audience-toggle" aria-label="Instruction audience">
+                <button
+                  aria-pressed={instructionAudience === "human"}
+                  className={instructionAudience === "human" ? "active" : ""}
+                  onClick={() => setInstructionAudience("human")}
+                  type="button"
+                >
+                  Human
+                </button>
+                <button
+                  aria-pressed={instructionAudience === "machine"}
+                  className={instructionAudience === "machine" ? "active" : ""}
+                  onClick={() => setInstructionAudience("machine")}
+                  type="button"
+                >
+                  Machine
+                </button>
+              </div>
+            </div>
+            {instructionAudience === "human" ? (
+              <>
+                <ol>
+                  <li>Use Human to open the app, or Machine to generate an agent handoff.</li>
+                  <li>Agents can open <code>/u#&lt;site-token&gt;</code>. The hash becomes the site token and is not sent to the server as part of the URL.</li>
+                  <li>After unlock, copy the visible plaintext handoff. It includes the MCP URL, bearer token, tools, and rules.</li>
+                  <li>Direct API flow starts with <code>GET /api/agent/capabilities</code>, then <code>/api/mcp</code> or <code>/api/agent/tools/call</code>.</li>
+                </ol>
+                <p>
+                  Do not provide .env files, service-role keys, provider payloads, shell, database,
+                  GitHub, or deployment access.
+                </p>
+              </>
+            ) : (
+              <>
+                <pre className="agent-machine-instructions ph-no-capture">{machineInstructions}</pre>
+                <div className="unlock-actions">
+                  <button className="note-btn" onClick={copyMachineInstructions} type="button">
+                    Copy machine instructions
+                  </button>
+                  <span className={`unlock-copy-status ${copyState}`}>
+                    {copyState === "machine-copied"
+                      ? "Copied."
+                      : copyState === "manual"
+                        ? "Clipboard blocked. Select the plaintext block manually."
+                        : "No bearer token is printed here until unlock succeeds."}
+                  </span>
+                </div>
+              </>
+            )}
+          </section>
+        ) : null}
 
         {state.status === "agent-ready" ? (
           <section className="unlock-agent-ready" aria-live="polite">
@@ -303,4 +402,28 @@ function decodePasscodeHash(value: string) {
   } catch {
     return value;
   }
+}
+
+function getHashToken(hash: string) {
+  const rawHash = hash.startsWith("#") ? hash.slice(1) : hash;
+  if (!rawHash.trim()) return "";
+
+  const decodedHash = decodePasscodeHash(rawHash.trim());
+  const hashParams = new URLSearchParams(decodedHash);
+  return hashParams.get("token")
+    ?? hashParams.get("access_token")
+    ?? decodedHash;
+}
+
+function formatMachineInstructions() {
+  return `YC_OS_AGENT_LAUNCH
+open=/u#<site-token>
+hash=Use window.location.hash without "#"; this is the site token.
+flow=If hash exists, wait for auto-unlock and read/copy "YC OS MCP agent handoff".
+fallback=If locked, ask for site token or copied handoff.
+api=GET /api/agent/capabilities with Authorization: Bearer <site-token>; then /api/mcp or POST /api/agent/tools/call.
+read_first=get_agent_guide,list_approval_events,get_event_prep_context,list_approval_queue,get_approval_summary
+writes=live. Use returned actions only. reason required. sendEmail=false unless asked. max 10 guests.
+never=.env,service-role keys,provider payloads,shell,DB,GitHub,deploy access,public token logs.
+report=page URL,event id/filter,tool/action,result,next decision.`;
 }
