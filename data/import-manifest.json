@@ -1,0 +1,32 @@
+{
+  "import_name": "yc_winter_2026_event_prep_seed",
+  "import_version": "v1",
+  "imported_at": "2026-06-09T06:36:02.000Z",
+  "source_dir": "yc_extract/output",
+  "sources": [
+    {
+      "name": "winter_2026_full.json",
+      "path": "yc_extract/output/winter_2026_full.json",
+      "source_url": "https://www.ycombinator.com/companies?batch=Winter%202026",
+      "retrieved_at": "2026-06-09T03:29:42.017678+00:00"
+    },
+    {
+      "name": "winter_2026_public_enrichment_full.json",
+      "path": "yc_extract/output/winter_2026_public_enrichment_full.json",
+      "source_url": "https://www.ycombinator.com/launches",
+      "retrieved_at": "2026-06-09T03:56:44.492589+00:00"
+    }
+  ],
+  "counts": {
+    "events": 1,
+    "companies": 198,
+    "founders": 415,
+    "attendance": 415,
+    "founder_needs": 415,
+    "notes": 1245,
+    "copied_assets": 1046,
+    "founders_with_local_photo": 412,
+    "founders_missing_local_photo": 3
+  },
+  "privacy": "All records are generated from public YC profile, launch, jobs, and public enrichment data. Notes are public-derived seed context, not private notes."
+}

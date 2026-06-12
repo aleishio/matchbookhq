@@ -1,0 +1,174 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-06-09T04:20:00.000Z",
+  "source": null,
+  "includes": {
+    "company": true,
+    "agents": true,
+    "projects": true,
+    "issues": true,
+    "skills": false
+  },
+  "company": {
+    "path": "COMPANY.md",
+    "name": "YC OS",
+    "description": "Public-data-only development company for building YC operating system apps.",
+    "brandColor": null,
+    "logoPath": null,
+    "attachmentMaxBytes": null,
+    "requireBoardApprovalForNewAgents": false,
+    "feedbackDataSharingEnabled": false,
+    "feedbackDataSharingConsentAt": null,
+    "feedbackDataSharingConsentByUserId": null,
+    "feedbackDataSharingTermsVersion": null
+  },
+  "sidebar": {
+    "agents": ["yc-os-lead", "codex-engineer", "claude-reviewer", "research-analyst"],
+    "projects": ["yc-os"]
+  },
+  "agents": [
+    {
+      "slug": "yc-os-lead",
+      "name": "YC OS Lead",
+      "path": "agents/yc-os-lead.md",
+      "skills": [],
+      "role": "cto",
+      "title": "Technical Lead",
+      "icon": "brain",
+      "capabilities": "Owns architecture, repo policy, public-data constraints, gbrain usage, and Vercel deployment strategy.",
+      "reportsToSlug": null,
+      "adapterType": "claude_local",
+      "adapterConfig": {},
+      "runtimeConfig": {},
+      "permissions": {"canCreateAgents": false},
+      "budgetMonthlyCents": 0,
+      "metadata": {"dataPolicy": "public-only", "projectRoot": "."}
+    },
+    {
+      "slug": "codex-engineer",
+      "name": "Codex Engineer",
+      "path": "agents/codex-engineer.md",
+      "skills": [],
+      "role": "engineer",
+      "title": "Implementation Agent",
+      "icon": "code",
+      "capabilities": "Implements repo changes, runs tests, uses Supabase MCP for Supabase work, and uses gbrain before large tasks.",
+      "reportsToSlug": "yc-os-lead",
+      "adapterType": "codex_local",
+      "adapterConfig": {
+        "model": "gpt-5.5"
+      },
+      "runtimeConfig": {
+        "model": "gpt-5.5"
+      },
+      "permissions": {"canCreateAgents": false},
+      "budgetMonthlyCents": 0,
+      "metadata": {"dataPolicy": "public-only", "projectRoot": "."}
+    },
+    {
+      "slug": "claude-reviewer",
+      "name": "Claude Reviewer",
+      "path": "agents/claude-reviewer.md",
+      "skills": [],
+      "role": "qa",
+      "title": "Review and QA Agent",
+      "icon": "eye",
+      "capabilities": "Reviews diffs, checks public-repo safety, verifies Supabase RLS/security posture, and validates Vercel readiness.",
+      "reportsToSlug": "yc-os-lead",
+      "adapterType": "claude_local",
+      "adapterConfig": {},
+      "runtimeConfig": {},
+      "permissions": {"canCreateAgents": false},
+      "budgetMonthlyCents": 0,
+      "metadata": {"dataPolicy": "public-only", "projectRoot": "."}
+    },
+    {
+      "slug": "research-analyst",
+      "name": "Research Analyst",
+      "path": "agents/research-analyst.md",
+      "skills": [],
+      "role": "researcher",
+      "title": "Public Data Research Agent",
+      "icon": "search",
+      "capabilities": "Works only with public YC/company/web data, preserves source URLs and retrieval timestamps, and avoids private or authenticated data.",
+      "reportsToSlug": "yc-os-lead",
+      "adapterType": "claude_local",
+      "adapterConfig": {},
+      "runtimeConfig": {},
+      "permissions": {"canCreateAgents": false},
+      "budgetMonthlyCents": 0,
+      "metadata": {"dataPolicy": "public-only", "projectRoot": "."}
+    }
+  ],
+  "skills": [],
+  "projects": [
+    {
+      "slug": "yc-os",
+      "name": "YC OS Apps",
+      "path": "projects/yc-os.md",
+      "description": "Public-by-default app development for YC operating system experiments.",
+      "ownerAgentSlug": "yc-os-lead",
+      "leadAgentSlug": "codex-engineer",
+      "targetDate": null,
+      "color": "#2563eb",
+      "status": "in_progress",
+      "executionWorkspacePolicy": {
+        "enabled": true,
+        "defaultMode": "shared_workspace",
+        "workspaceStrategy": {
+          "type": "project_primary",
+          "baseRef": "main"
+        }
+      },
+      "workspaces": [
+        {
+          "key": "local-dev",
+          "name": "Local YC OS repo",
+          "sourceType": "local_path",
+          "repoUrl": null,
+          "repoRef": "main",
+          "defaultRef": "main",
+          "visibility": "default",
+          "setupCommand": "git status --short",
+          "cleanupCommand": null,
+          "metadata": {
+            "cwd": ".",
+            "deploymentTarget": "vercel",
+            "publicDataOnly": true
+          },
+          "isPrimary": true
+        }
+      ],
+      "metadata": {
+        "repoPath": ".",
+        "deploymentTarget": "vercel",
+        "publicDataOnly": true,
+        "sharedBrain": "gbrain"
+      }
+    }
+  ],
+  "issues": [
+    {
+      "slug": "finish-shared-brain-setup",
+      "identifier": "YCO-1",
+      "title": "Finish shared gbrain and Paperclip onboarding",
+      "path": "projects/issues/finish-shared-brain-setup.md",
+      "projectSlug": "yc-os",
+      "projectWorkspaceKey": "local-dev",
+      "assigneeAgentSlug": null,
+      "description": "Verify gbrain via Supabase and Voyage, then onboard Paperclip agents against the YC OS public-data repo.",
+      "recurring": false,
+      "routine": null,
+      "legacyRecurrence": null,
+      "status": "done",
+      "priority": "high",
+      "labelIds": [],
+      "billingCode": null,
+      "executionWorkspaceSettings": null,
+      "assigneeAdapterOverrides": null,
+      "comments": [],
+      "metadata": {"publicDataOnly": true}
+    }
+  ],
+  "envInputs": []
+}

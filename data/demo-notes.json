@@ -1,0 +1,119 @@
+[
+  {
+    "id": "note_founder_001_office_hours_seed",
+    "founderId": "founder_001",
+    "type": "office_hours",
+    "body": "Synthetic office-hours prep: ask for the narrowest blocker first, then map the answer to one concrete intro or next step.",
+    "source": {
+      "kind": "demo",
+      "label": "Synthetic demo note",
+      "eventId": "event_demo_2026_06_09"
+    },
+    "createdAt": "2026-06-09T05:32:00.000Z",
+    "isSynthetic": true
+  },
+  {
+    "id": "note_founder_001_other_founder_seed",
+    "founderId": "founder_001",
+    "type": "other_founder",
+    "body": "Synthetic founder context: another founder with a similar GTM motion may be useful if they can compare a recent customer conversation.",
+    "source": {
+      "kind": "demo",
+      "label": "Synthetic demo note",
+      "eventId": "event_demo_2026_06_09"
+    },
+    "createdAt": "2026-06-09T05:31:00.000Z",
+    "isSynthetic": true
+  },
+  {
+    "id": "note_founder_001_room_seed",
+    "founderId": "founder_001",
+    "type": "room",
+    "body": "Synthetic room note: prioritize warm intros after the founder confirms the exact customer, investor, or hire they need.",
+    "source": {
+      "kind": "demo",
+      "label": "Synthetic demo note",
+      "eventId": "event_demo_2026_06_09"
+    },
+    "createdAt": "2026-06-09T05:30:00.000Z",
+    "isSynthetic": true
+  },
+  {
+    "id": "note_founder_002_office_hours_seed",
+    "founderId": "founder_002",
+    "type": "office_hours",
+    "body": "Synthetic office-hours prep: clarify whether the ask is fundraising, design partners, hiring, or distribution before suggesting matches.",
+    "source": {
+      "kind": "demo",
+      "label": "Synthetic demo note",
+      "eventId": "event_demo_2026_06_09"
+    },
+    "createdAt": "2026-06-09T05:29:00.000Z",
+    "isSynthetic": true
+  },
+  {
+    "id": "note_founder_002_other_founder_seed",
+    "founderId": "founder_002",
+    "type": "other_founder",
+    "body": "Synthetic founder context: compare notes with adjacent-category founders only when the intro has a clear exchange of tactics.",
+    "source": {
+      "kind": "demo",
+      "label": "Synthetic demo note",
+      "eventId": "event_demo_2026_06_09"
+    },
+    "createdAt": "2026-06-09T05:28:00.000Z",
+    "isSynthetic": true
+  },
+  {
+    "id": "note_founder_002_room_seed",
+    "founderId": "founder_002",
+    "type": "room",
+    "body": "Synthetic room note: if the strongest match is same-company context, label it as context rather than a new introduction.",
+    "source": {
+      "kind": "demo",
+      "label": "Synthetic demo note",
+      "eventId": "event_demo_2026_06_09"
+    },
+    "createdAt": "2026-06-09T05:27:00.000Z",
+    "isSynthetic": true
+  },
+  {
+    "id": "note_founder_003_office_hours_seed",
+    "founderId": "founder_003",
+    "type": "office_hours",
+    "body": "Synthetic office-hours prep: ask what changed since the last customer or investor conversation before recommending the next intro.",
+    "source": {
+      "kind": "demo",
+      "label": "Synthetic demo note",
+      "eventId": "event_demo_2026_06_09"
+    },
+    "createdAt": "2026-06-09T05:26:00.000Z",
+    "isSynthetic": true
+  },
+  {
+    "id": "note_founder_003_other_founder_seed",
+    "founderId": "founder_003",
+    "type": "other_founder",
+    "body": "Synthetic founder context: ask peers for specific operator experience, not broad advice, when the need is execution-heavy.",
+    "source": {
+      "kind": "demo",
+      "label": "Synthetic demo note",
+      "eventId": "event_demo_2026_06_09"
+    },
+    "createdAt": "2026-06-09T05:25:00.000Z",
+    "isSynthetic": true
+  },
+  {
+    "id": "note_founder_003_room_seed",
+    "founderId": "founder_003",
+    "type": "room",
+    "body": "Synthetic room note: keep the note panel populated even when imported notes are missing, then replace these records with public-safe imported summaries.",
+    "source": {
+      "kind": "demo",
+      "label": "Synthetic demo note",
+      "eventId": "event_demo_2026_06_09"
+    },
+    "createdAt": "2026-06-09T05:24:00.000Z",
+    "isSynthetic": true
+  }
+]

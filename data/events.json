@@ -1,0 +1,15 @@
+[
+  {
+    "id": "yc-w26-event-prep",
+    "title": "YC Winter 2026 Event Prep",
+    "location": "San Francisco",
+    "starts_at": "2026-06-09T18:00:00.000Z",
+    "attendee_count": 415,
+    "source": {
+      "kind": "public_seed",
+      "source_url": "https://www.ycombinator.com/companies?batch=Winter%202026",
+      "retrieved_at": "2026-06-09T03:29:42.017678+00:00",
+      "imported_at": "2026-06-09T06:36:02.000Z"
+    }
+  }
+]
