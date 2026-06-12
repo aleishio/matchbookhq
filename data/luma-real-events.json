@@ -1,0 +1,104 @@
+{
+  "events": [
+    {
+      "id": "dogpatch-founder-breakfast",
+      "luma_event_id": "evt-YQNWbKPIleIwPzW",
+      "title": "Dogpatch Founder Breakfast",
+      "url": "https://luma.com/dogpatch-founder-breakfast-0623",
+      "location": "Dogpatch, San Francisco",
+      "starts_at": "2026-06-23T17:00:00.000Z",
+      "ends_at": "2026-06-23T18:30:00.000Z",
+      "timezone": "America/Los_Angeles",
+      "source": "Lu.ma API sanitized fixture",
+      "synced_at": "2026-06-10T00:00:00.000Z",
+      "raw_guest_count": 13,
+      "matched_founder_count": 12,
+      "approved_founder_count": 2,
+      "sanitized_fields_omitted": [
+        "email",
+        "phone",
+        "luma_guest_id"
+      ]
+    }
+  ],
+  "attendees": [
+    {
+      "event_id": "dogpatch-founder-breakfast",
+      "founder_id": "founder_2840984",
+      "luma_status": "pending",
+      "review_status": "ready",
+      "prep_status": "attending"
+    },
+    {
+      "event_id": "dogpatch-founder-breakfast",
+      "founder_id": "founder_736150",
+      "luma_status": "pending",
+      "review_status": "ready",
+      "prep_status": "attending"
+    },
+    {
+      "event_id": "dogpatch-founder-breakfast",
+      "founder_id": "founder_2459873",
+      "luma_status": "pending",
+      "review_status": "ready",
+      "prep_status": "attending"
+    },
+    {
+      "event_id": "dogpatch-founder-breakfast",
+      "founder_id": "founder_564249",
+      "luma_status": "approved",
+      "prep_status": "attending"
+    },
+    {
+      "event_id": "dogpatch-founder-breakfast",
+      "founder_id": "founder_1990817",
+      "luma_status": "approved",
+      "prep_status": "attending"
+    },
+    {
+      "event_id": "dogpatch-founder-breakfast",
+      "founder_id": "founder_2960509",
+      "luma_status": "pending",
+      "review_status": "needsInfo",
+      "prep_status": "waitlist"
+    },
+    {
+      "event_id": "dogpatch-founder-breakfast",
+      "founder_id": "founder_414472",
+      "luma_status": "pending",
+      "review_status": "needsInfo",
+      "prep_status": "waitlist"
+    },
+    {
+      "event_id": "dogpatch-founder-breakfast",
+      "founder_id": "founder_2277575",
+      "luma_status": "pending",
+      "review_status": "manual",
+      "prep_status": "waitlist"
+    },
+    {
+      "event_id": "dogpatch-founder-breakfast",
+      "founder_id": "founder_3203252",
+      "luma_status": "declined",
+      "prep_status": "declined"
+    },
+    {
+      "event_id": "dogpatch-founder-breakfast",
+      "founder_id": "founder_3196415",
+      "luma_status": "declined",
+      "prep_status": "declined"
+    },
+    {
+      "event_id": "dogpatch-founder-breakfast",
+      "founder_id": "founder_3174521",
+      "luma_status": "declined",
+      "prep_status": "declined"
+    },
+    {
+      "event_id": "dogpatch-founder-breakfast",
+      "founder_id": "founder_2801937",
+      "luma_status": "waitlist",
+      "prep_status": "waitlist"
+    }
+  ]
+}
