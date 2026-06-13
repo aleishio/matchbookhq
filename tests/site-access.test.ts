@@ -151,6 +151,31 @@ test("unlock route sets the shared cookie and enables agent session creation", a
   }
 });
 
+test("unlock route accepts human backup passwords but stores the shared token cookie", async () => {
+  const env = withSiteEnv({
+    YC_OS_ACCESS_TOKEN: "shared-test-token",
+    YC_OS_UNLOCK_COOKIE_NAME: "yc_os_access_token"
+  });
+
+  try {
+    for (const password of ["YC", "yc", "ycombinator"]) {
+      const response = await unlock(jsonPostRequest("/api/unlock", {
+        next: "/aleix",
+        password
+      }));
+      const body = await response.json();
+      const setCookie = response.headers.get("set-cookie") ?? "";
+
+      assert.equal(response.status, 200);
+      assert.deepEqual(body, { next: "/aleix", ok: true });
+      assert.match(setCookie, /yc_os_access_token=shared-test-token/);
+      assert.doesNotMatch(setCookie, new RegExp(`yc_os_access_token=${password}`));
+    }
+  } finally {
+    env.restore();
+  }
+});
+
 test("unlock route fails closed when the shared token is missing outside local dev", async () => {
   const env = withTestEnv({
     AGENT_ACCESS_TOKEN: undefined,
